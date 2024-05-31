@@ -1,4 +1,3 @@
-import React from "react";
 import cardPic from "../assets/thumnailSample.jpg";
 import channellogo from "../assets/logo.jpg";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
