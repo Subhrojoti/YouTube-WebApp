@@ -1,17 +1,24 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
-import Sidebar from "./Components/SideBar/Sidebar";
-
-import { Outlet } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import SearchResultPage from "./pages/SearchResultPage";
+import VideoDetailsPage from "./pages/VideoDetailsPage";
 
 function App() {
   return (
-    <div className="container mx-auto px-4 ">
-      <Navbar />
-      <div className="flex mt-4 gap-4">
-        <Sidebar />
-        <Outlet />
+    <BrowserRouter>
+      <div className="flex flex-col h-full">
+        <Navbar />
+        <Routes>
+          <Route path="/" exact element={<HomePage />} />
+          <Route
+            path="/searchResult/:searchQuery"
+            element={<SearchResultPage />}
+          />
+          <Route path="/video/:videoId" element={<VideoDetailsPage />} />
+        </Routes>
       </div>
-    </div>
+    </BrowserRouter>
   );
 }
 
