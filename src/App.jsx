@@ -3,6 +3,7 @@ import Navbar from "./Components/Navbar/Navbar";
 import HomePage from "./pages/HomePage";
 import SearchResultPage from "./pages/SearchResultPage";
 import VideoDetailsPage from "./pages/VideoDetailsPage";
+import WatchListPage from "./pages/WatchListPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             element={<SearchResultPage />}
           />
           <Route path="/video/:videoId" element={<VideoDetailsPage />} />
+          <Route path="/watchlist" element={<WatchListPage />} />
         </Routes>
       </div>
     </BrowserRouter>
