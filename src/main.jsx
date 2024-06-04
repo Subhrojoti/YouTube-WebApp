@@ -12,6 +12,8 @@ import {
 import VideoPage from "./pages/VideoPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import WatchListPage from "./pages/WatchListPage.jsx";
+import { store } from "./Redux/Store.js";
+import { Provider } from "react-redux";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,4 +27,8 @@ const router = createBrowserRouter(
 );
 
 const root = createRoot(document.getElementById("root"));
-root.render(<RouterProvider router={router} />);
+root.render(
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>
+);
