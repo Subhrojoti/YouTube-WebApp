@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import thumnail from "../assets/thumnailSample.jpg";
-import logo from "../assets/logo.jpg";
+import thumnail from "../../assets/thumnailSample.jpg";
+import logo from "../../assets/logo.jpg";
 
-const SearchResultVideoCard = () => {
+const WatchListCard = () => {
   return (
     <Link to="/video/1">
       <div className="flex flex-col md:flex-row mb-8 md:mb-3 lg:hover:bg-gray-200 rounded-xl md:p-4">
@@ -44,4 +44,4 @@ const SearchResultVideoCard = () => {
   );
 };
 
-export default SearchResultVideoCard;
+export default WatchListCard;
