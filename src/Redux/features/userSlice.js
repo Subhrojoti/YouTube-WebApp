@@ -21,7 +21,7 @@ const userSlice = createSlice({
     },
     removeWatchList: (state, action) => {
       state.watchList = state.watchList.filter(
-        (item) => item !== action.payload
+        (item) => item.videoId !== action.payload.videoId
       );
     },
   },

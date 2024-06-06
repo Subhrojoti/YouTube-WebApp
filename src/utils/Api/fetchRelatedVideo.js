@@ -1,17 +1,22 @@
 import axios from "axios";
+import {
+  BaseUrl,
+  X_RapidAPI_Host,
+  X_RapidAPI_Key,
+} from "../Constants/ApiConstant";
 
 export const fetchRelatedVideo = async (videoId) => {
   const options = {
     method: "GET",
-    url: "https://youtube-data8.p.rapidapi.com/video/related-contents/",
+    url: `${BaseUrl}/video/related-contents/`,
     params: {
       id: videoId,
       hl: "en",
       gl: "US",
     },
     headers: {
-      "x-rapidapi-key": "71c64329e8mshd870f6e8514d195p1dd0d6jsn4512c5fac084",
-      "x-rapidapi-host": "youtube-data8.p.rapidapi.com",
+      "x-rapidapi-key": X_RapidAPI_Key,
+      "x-rapidapi-host": X_RapidAPI_Host,
     },
   };
 

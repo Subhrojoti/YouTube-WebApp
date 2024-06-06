@@ -6,8 +6,9 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const handleSideNav = (e) => {
     if (e.target.innerText === "Home") navigate("/");
+    if (e.target.innerText === "Watch List") navigate("/watchList");
     if (e.target.innerText === "Trending") navigate(`/searchResult/trending`);
-    if (e.target.innerText === "Musics") navigate(`/searchResult/music`);
+    if (e.target.innerText === "Musics") navigate(`/searchResult/songs`);
     if (e.target.innerText === "Movies") navigate(`/searchResult/movies`);
   };
   return (

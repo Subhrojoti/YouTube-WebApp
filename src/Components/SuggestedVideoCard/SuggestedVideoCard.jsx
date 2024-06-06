@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { noOfViews } from "../../utils/noOfViews";
+import { noOfViews } from "../../utils/helperFunction/noOfViews";
 import { Link } from "react-router-dom";
 
 const SuggestedVideoCard = ({ video, views }) => {
