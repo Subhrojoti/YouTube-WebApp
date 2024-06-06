@@ -1,22 +1,31 @@
-import { LeftNavCategories } from "../../Constants/LeftNavCategories";
+import { useNavigate } from "react-router-dom";
+import { LeftNavCategories } from "../../utils/Constants/LeftNavCategories";
 import React from "react";
 
 const Sidebar = () => {
-  // console.log(LeftNavCategories);
+  const navigate = useNavigate();
+  const handleSideNav = (e) => {
+    if (e.target.innerText === "Home") navigate("/");
+    if (e.target.innerText === "Watch List") navigate("/watchList");
+    if (e.target.innerText === "Trending") navigate(`/searchResult/trending`);
+    if (e.target.innerText === "Musics") navigate(`/searchResult/songs`);
+    if (e.target.innerText === "Movies") navigate(`/searchResult/movies`);
+  };
   return (
-    <div className="md:block w-[240px] overflow-y-auto h-full py-4 bg-white absolute md:relative z-10 translate-x-[-240px] md:translate-x-0 transition-all">
+    <div className="md:block xl:w-[240px] md:w-[100px] overflow-y-auto h-full py-4 bg-white absolute md:relative z-10 translate-x-[-240px] md:translate-x-0 transition-all">
       <div className="flex px-5 flex-col">
         {LeftNavCategories.map((item, k) => (
           <React.Fragment key={k}>
             <div
               className={
-                "text-black text-sm cursor-pointer h-10 flex items-center px-3 mb-[1px] rounded-lg hover:bg-white/[0.15]"
+                "text-black text-sm cursor-pointer h-10 flex items-center px-3 mb-[1px] hover:bg-gray-100 hover:rounded-lg"
               }
+              onClick={handleSideNav}
             >
               <span className="text-xl mr-5">{item.icon} </span>
-              {item.name}
+              <span className="hidden xl:block"> {item.name}</span>
             </div>
-            {item.divider && <hr className="my-5 border-white/[0.2]" />}
+            {item.divider && <hr className="my-5 border-gray/[0.5]" />}
           </React.Fragment>
         ))}
       </div>

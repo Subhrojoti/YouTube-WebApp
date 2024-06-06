@@ -16,7 +16,7 @@ export const LeftNavCategories = [
     icon: <MdSubscriptions />,
     divider: true,
   },
-  { name: "Channel", type: "mid", icon: <MdOutlineAddToPhotos /> },
+  { name: "You", type: "mid", icon: <MdOutlineAddToPhotos /> },
   { name: "Watch List", type: "mid", icon: <RiPlayList2Fill />, divider: true },
   { name: "Trending", type: "low", icon: <FaFireAlt /> },
   { name: "Musics", type: "low", icon: <BsMusicNoteList /> },
