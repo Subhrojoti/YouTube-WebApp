@@ -1,16 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ReactPlayer from "react-player";
 import { AiOutlineLike } from "react-icons/ai";
 import SuggestedVideoCard from "../Components/SuggestedVideoCard/SuggestedVideoCard";
 import { useParams } from "react-router-dom";
 import { fetchRelatedVideo } from "../utils/Api/fetchRelatedVideo";
 import { fetchVideoDetails } from "../utils/Api/fetchVideoDetails";
-import { noOfViews } from "../utils/noOfViews";
+import { noOfViews } from "../utils/helperFunction/noOfViews";
+import { MdMoreHoriz } from "react-icons/md";
+import { addWatchList } from "../Redux/features/userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const VideoDetailsPage = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const popupRef = useRef(null);
   const { videoId } = useParams();
   const [videoDetail, setVideoDetail] = useState({});
   const [getRelatedVideo, setGetRelatedVideos] = useState([]);
+  const dispatch = useDispatch();
+  const watchList = useSelector((state) => state.user.watchList);
+  const isAdded = watchList.some((vid) => vid.videoId === videoId);
+
+  const handleWatchList = () => {
+    // add logic that if not logged in redirect to login page
+    if (!isAdded) dispatch(addWatchList(videoDetail));
+    setIsOpen(!isOpen);
+  };
+
+  const handleClickOutside = (event) => {
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     const handleRelatedVideo = async () => {
@@ -19,13 +50,13 @@ const VideoDetailsPage = () => {
         setGetRelatedVideos(data);
         const details = await fetchVideoDetails(videoId);
         setVideoDetail(details);
-        console.log(details);
       } catch (error) {
         console.log(error);
       }
     };
     handleRelatedVideo();
   }, [videoId]);
+
   return (
     <div className="flex justify-center flex-row h-100vh bg-white w-full">
       <div className="w-full max-w-[1280px] flex flex-col lg:flex-row">
@@ -65,9 +96,21 @@ const VideoDetailsPage = () => {
                 {`${noOfViews(videoDetail?.stats?.likes)} likes`}
               </div>
               <div className="flex items-center justify-center h-11 px-6 rounded-3xl bg-black/30 ml-4">
-                <AiOutlineLike className="text-xl text-balck mr-2 " />
+                {/* <AiOutlineLike className="text-xl text-balck mr-2 " /> */}
                 {`${noOfViews(videoDetail?.stats?.views)} views`}
               </div>
+              <span className="flex items-center justify-center h-11 w-11 rounded-full bg-black/30 ml-4 relative">
+                <MdMoreHoriz size={25} onClick={() => setIsOpen(!isOpen)} />
+                {isOpen && (
+                  <span
+                    className="absolute right-0 bottom-[-100%] z-10 bg-black/30 rounded-md min-w-max p-2 cursor-pointer"
+                    onClick={handleWatchList}
+                    ref={popupRef}
+                  >
+                    Add To WatchList
+                  </span>
+                )}
+              </span>
             </div>
           </div>
         </div>
