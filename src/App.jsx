@@ -15,7 +15,6 @@ import { store, persistor } from "./Redux/Store.js";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import ChannelPage from "./pages/ChannelPage";
-
 import SignUpPage from "./pages/SignUpPage";
 
 const Container = () => {
@@ -32,10 +31,10 @@ const Container = () => {
 
 const AuthRoute = () => {
   let token = localStorage.getItem("token");
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   if (token) {
     return <Outlet />;
-  } else navigate("/signUp");
+  } else return <SignUpPage />;
 };
 function App() {
   return (
@@ -55,12 +54,14 @@ function App() {
                 element={<SearchResultPage />}
               />
               <Route path="/video/:videoId" element={<VideoDetailsPage />} />
-              <Route path="/watchList" element={<AuthRoute />}>
+              <Route path="/auth" element={<AuthRoute />}>
                 <Route path="/watchList" element={<WatchListPage />} />
                 <Route path="/channel" element={<ChannelPage />} />
-              </Routes>
-            </div>
-          </div>
+              </Route>
+            </Route>
+          </Routes>
+          {/* </div>
+          </div> */}
         </BrowserRouter>
       </PersistGate>
     </Provider>
