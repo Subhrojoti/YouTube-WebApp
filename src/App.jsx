@@ -14,6 +14,8 @@ import Sidebar from "./Components/SideBar/Sidebar";
 import { store, persistor } from "./Redux/Store.js";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import ChannelPage from "./pages/ChannelPage";
+
 import SignUpPage from "./pages/SignUpPage";
 
 const Container = () => {
@@ -55,11 +57,10 @@ function App() {
               <Route path="/video/:videoId" element={<VideoDetailsPage />} />
               <Route path="/watchList" element={<AuthRoute />}>
                 <Route path="/watchList" element={<WatchListPage />} />
-              </Route>
-            </Route>
-          </Routes>
-          {/* </div>
-            </div> */}
+                <Route path="/channel" element={<ChannelPage />} />
+              </Routes>
+            </div>
+          </div>
         </BrowserRouter>
       </PersistGate>
     </Provider>
