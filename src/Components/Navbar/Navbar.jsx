@@ -38,7 +38,10 @@ const Navbar = () => {
       </div>
       <div className="pr-3">
         {/* need to apply logic that if logged in profile icon will display else sign up button  */}
-        <button className="rounded-full bg-gray-100 w-[80px] h-10 cursor-pointer">
+        <button
+          className="rounded-full bg-gray-100 w-[80px] h-10 cursor-pointer"
+          onClick={() => navigate(`/signUp`)}
+        >
           Sign In
         </button>
       </div>
