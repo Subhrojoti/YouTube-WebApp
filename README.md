@@ -1,3 +1,6 @@
+# YouTube-Inspired Video Sharing Application
+
+
 ## Project Overview
 This project is a basic video-sharing application inspired by YouTube. It includes features such as video listings, playback, recommendations, user authentication, watchlist management, and more. The app aims to provide a seamless video browsing and watching experience, with an intuitive and visually appealing user interface.
 
@@ -24,7 +27,6 @@ This project is a basic video-sharing application inspired by YouTube. It includ
    git clone https://github.com/your-username/your-repo.git
    cd your-repo
 
-# YouTube-Inspired Video Sharing Application
 
 ## Installation and Setup
 ### Prerequisites
