@@ -22,7 +22,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Container = () => {
   return (
-    <div className="flex flex-col h-full w-[100%] 2xl:w-[1536px] mx-auto">
+    <div className="flex flex-col h-full w-[100%] mx-auto">
       <Navbar />
       <div className="flex flex-row h-[calc(100%-60px)]">
         <Sidebar />
