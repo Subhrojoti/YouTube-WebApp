@@ -3,8 +3,11 @@ import { LeftNavCategories } from "../../utils/Constants/LeftNavCategories";
 import React from "react";
 import { Zoom, toast } from "react-toastify";
 
+// sidebar component
 const Sidebar = () => {
   const navigate = useNavigate();
+
+  // handles the navigation of the sidebar
   const handleSideNav = (e) => {
     if (e.target.innerText === "Home") navigate("/");
     if (e.target.innerText === "Watch List") navigate("/auth/watchList");
@@ -20,7 +23,10 @@ const Sidebar = () => {
     }
   };
   return (
-    <div className="md:block xl:w-[240px] md:w-[100px] overflow-y-auto h-full py-4 bg-white absolute md:relative z-10 translate-x-[-240px] md:translate-x-0 transition-all">
+    <div
+      className="md:block xl:w-[240px] md:w-[100px] overflow-y-auto h-full py-4 bg-white absolute
+      md:relative z-10 translate-x-[-240px] md:translate-x-0 transition-all"
+    >
       <div className="flex px-5 flex-col">
         {LeftNavCategories.map((item, k) => (
           <React.Fragment key={k}>

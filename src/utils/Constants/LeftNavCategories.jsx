@@ -7,6 +7,7 @@ import { FaFireAlt } from "react-icons/fa";
 import { BsMusicNoteList } from "react-icons/bs";
 import { MdLocalMovies } from "react-icons/md";
 
+// sidebar navigation list
 export const LeftNavCategories = [
   { name: "Home", type: "top", icon: <GoHomeFill /> },
   { name: "Shorts", type: "top", icon: <SiYoutubeshorts /> },

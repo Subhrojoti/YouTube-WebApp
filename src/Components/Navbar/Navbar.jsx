@@ -21,6 +21,7 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  // handles the show and hide functionality of sign in and logout
   const handleClickOutside = (event) => {
     if (
       popupRef.current &&
@@ -44,6 +45,7 @@ const Navbar = () => {
     };
   }, [isOpen]);
 
+  // handles the search functionality
   const handleSearch = () => {
     if (searchTerm?.length > 0) {
       navigate(`/searchResult/${searchTerm}`);
@@ -82,7 +84,6 @@ const Navbar = () => {
         />
       </div>
       <div className="pr-3">
-        {/* need to apply logic that if logged in profile icon will display else sign up button  */}
         {token === null ? (
           <button
             className="rounded-full bg-youtube-red text-white w-[80px] h-10 cursor-pointer"

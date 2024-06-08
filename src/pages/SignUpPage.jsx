@@ -22,8 +22,9 @@ const SignUpPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const auth = getAuth(app);
+  const auth = getAuth(app); // instance of firebase app
 
+  // handles signup and login functionality
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -36,6 +37,7 @@ const SignUpPage = () => {
         const user = userCredential.user;
         if (user) {
           const userRef = collection(db, "users");
+          // setting the firestore with the information of user
           await setDoc(doc(userRef, user.uid), {
             email: email,
             name: name,
@@ -54,10 +56,10 @@ const SignUpPage = () => {
         );
         const user = userCredential.user;
         if (user) {
-          fetchUserData();
+          fetchUserData(); // after successful login fetching user details from firestore
           toast.success("login Successful", { transition: Zoom });
-          localStorage.setItem("token", user.accessToken);
-          localStorage.setItem("uid", user.uid);
+          localStorage.setItem("token", user.accessToken); // setting the access token to local storage
+          localStorage.setItem("uid", user.uid); // setting the user id to local storage
           navigate("/");
         }
       }
@@ -65,9 +67,11 @@ const SignUpPage = () => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
+      toast.error(errorMessage, { transition: Zoom });
     }
   };
 
+  // function to fetch user data from firestore
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
       const docRef = doc(db, "users", user.uid);

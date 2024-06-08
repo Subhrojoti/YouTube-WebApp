@@ -8,6 +8,7 @@ const HomePage = () => {
   const videos = useSelector((state) => state.homeVideo.allVideos);
   const dispatch = useDispatch();
 
+  // fetching the home page video from given api
   useEffect(() => {
     const fetchData = async () => {
       try {
