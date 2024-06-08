@@ -76,7 +76,7 @@ The application uses Tailwind CSS for styling, ensuring a visually appealing and
 - **Firebase Authentication:** Integrating Firebase for the first time posed challenges, but it was successfully implemented with secure user authentication.
 
 ## Deployment
-The application has been successfully deployed on Netlify. You can access it [here](https://tube-buddy.netlify.app/).
+The application has been successfully deployed on Netlify. You can access it [here](https://utube-project-web.netlify.app/).
 
 ## Conclusion
 This project showcases a basic yet functional video-sharing application inspired by YouTube. It includes key features such as video listings, playback, user authentication, and watchlist management, providing a comprehensive and user-friendly experience.
