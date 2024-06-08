@@ -9,6 +9,8 @@ import { noOfViews } from "../utils/helperFunction/noOfViews";
 import { MdMoreHoriz } from "react-icons/md";
 import { addWatchList } from "../Redux/features/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { Zoom, toast } from "react-toastify";
+import { UpdateFireStore } from "../utils/helperFunction/updateFireStore";
 
 const VideoDetailsPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,12 +22,31 @@ const VideoDetailsPage = () => {
   const dispatch = useDispatch();
   const watchList = useSelector((state) => state.user.watchList);
   const isAdded = watchList.some((vid) => vid.videoId === videoId);
+  const token = localStorage.getItem("token");
+  const userState = useSelector((state) => state.user);
+  const [user, setUser] = useState(userState);
 
-  const handleWatchList = () => {
+  const handleWatchList = async () => {
     // add logic that if not logged in redirect to login page
-    if (!isAdded) dispatch(addWatchList(videoDetail));
-    setIsOpen(!isOpen);
+    if (token) {
+      if (!isAdded) {
+        dispatch(addWatchList(videoDetail));
+        toast.success("Added to WatchList", { transition: Zoom });
+        await UpdateFireStore(user);
+        setIsOpen(!isOpen);
+      } else {
+        toast.info("Already added", { transition: Zoom });
+        setIsOpen(!isOpen);
+      }
+    } else {
+      toast.info("need to login", { transition: Zoom });
+      setIsOpen(!isOpen);
+    }
   };
+
+  useEffect(() => {
+    setUser(userState);
+  }, [userState, dispatch]);
 
   const handleClickOutside = (event) => {
     if (

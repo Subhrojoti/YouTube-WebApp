@@ -21,8 +21,6 @@ const VideoCard = ({ cardType, video, views }) => {
   let view = noOfViews(views);
   const token = localStorage.getItem("token");
 
-  // console.log(user);
-
   useEffect(() => {
     setUser(userState);
   }, [userState, dispatch]);
@@ -40,11 +38,14 @@ const VideoCard = ({ cardType, video, views }) => {
         dispatch(addWatchList(video));
         toast.success("Added to watchList", { transition: Zoom });
         await UpdateFireStore(user);
+        setIsOpen(!isOpen);
       } else {
         toast.info("Already added", { transition: Zoom });
+        setIsOpen(!isOpen);
       }
     } else {
       toast.info("Need to Login", { transition: Zoom });
+      setIsOpen(!isOpen);
     }
     setIsOpen(!isOpen);
   };
@@ -119,7 +120,7 @@ const VideoCard = ({ cardType, video, views }) => {
         </div>
       </Link>
       <span className="mt-4 relative " ref={iconRef}>
-        <IoMdMore size={25} onClick={toggleMenu} className="" />
+        <IoMdMore size={25} onClick={toggleMenu} className="cursor-pointer" />
         {isOpen && (
           <span
             className="absolute right-0 bg-gray-100 rounded-md min-w-max p-2 cursor-pointer"
