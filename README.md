@@ -27,22 +27,15 @@ This project is a basic video-sharing application inspired by YouTube. It includ
    git clone https://github.com/your-username/your-repo.git
    cd your-repo
 
-
-## Installation and Setup
-### Prerequisites
-- Node.js and npm installed on your machine
-- Firebase project set up for authentication
-
-### Steps
-1. **Install dependencies:**
+2. **Install dependencies:**
     ```bash
     npm install
     ```
-2. **Set up Firebase:**
+3. **Set up Firebase:**
     - Create a Firebase project at Firebase Console.
     - Enable Authentication with Email/Password.
     - Obtain your Firebase config and replace it in your project.
-3. **Run the application:**
+4. **Run the application:**
     ```bash
     npm run dev
     ```
