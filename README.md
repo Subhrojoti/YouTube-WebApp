@@ -35,6 +35,7 @@ This project is a basic video-sharing application inspired by YouTube. It includ
     - Create a Firebase project at Firebase Console.
     - Enable Authentication with Email/Password.
     - Obtain your Firebase config and replace it in your project.
+      
 4. **Run the application:**
     ```bash
     npm run dev
