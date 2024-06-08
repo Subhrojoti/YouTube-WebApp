@@ -1,17 +1,77 @@
-import React from "react";
-import logo from "../assets/logo.jpg";
-import WatchListCard from "../Components/CardForTesting/WatchListCard";
-import { dummyData } from "../DummyData/dummyData";
+import { useEffect, useRef, useState } from "react";
+import defaultUser from "../assets/defaultUser.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { Zoom, toast } from "react-toastify";
+import { addProfilePhoto } from "../Redux/features/userSlice";
+import VideoCard from "../Components/VideoCard/VideoCard";
+import { UpdateFireStore } from "../utils/helperFunction/updateFireStore";
 
 const ChannelPage = () => {
+  const userState = useSelector((state) => state.user);
+  const [user, setUser] = useState(userState);
+  const [profileImage, setProfileImage] = useState(null);
+  const profileImageRef = useRef(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setUser(userState);
+  }, [userState, dispatch]);
+
+  // created a input ref on image tag on click
+  const handleImageInput = () => {
+    profileImageRef.current.click();
+  };
+
+  // getting the image file from user and uploading it to the cloudinary
+  const handleChangeUserImage = (event) => {
+    const inputImage = event.target.files[0];
+    setProfileImage(URL.createObjectURL(inputImage));
+
+    const saveImage = async () => {
+      const data = new FormData();
+      data.append("file", inputImage);
+      data.append("upload_preset", "Asish_cloud_photo");
+      data.append("cloud_name", "dlr8llulh");
+      try {
+        const res = await fetch(
+          "https://api.cloudinary.com/v1_1/dlr8llulh/image/upload",
+          {
+            method: "POST",
+            body: data,
+          }
+        );
+        const cloudData = await res.json();
+        console.log(cloudData.url);
+        if (cloudData) toast.success("done");
+        dispatch(addProfilePhoto(cloudData.url));
+        await UpdateFireStore(user);
+        console.log("after updateFirestore");
+      } catch (error) {
+        toast.error(error.message, { transition: Zoom });
+      }
+    };
+    saveImage();
+  };
+
+  useEffect(() => {});
   return (
     <div className="flex flex-col w-full  px-10 items-center pt-7 max-md:p-1 overflow-y-auto">
       <div className=" flex gap-2 max-md:flex-col max-md:items-center ">
-        <div className="channel-logo w-44 h-44 bg-red-400 rounded-full overflow-hidden max-md:w-20 max-md:h-20">
-          <img src={logo} className="object-cover w-full h-full" />
+        <div className="channel-logo w-44 h-44 bg-white rounded-full overflow-hidden max-md:w-20 max-md:h-20">
+          <img
+            src={profileImage || user?.profilePhoto || defaultUser}
+            className="object-cover w-full h-full"
+            onClick={handleImageInput}
+          />
+          <input
+            type="file"
+            ref={profileImageRef}
+            onChange={handleChangeUserImage}
+            className="hidden"
+          />
         </div>
         <div className="flex flex-col flex-wrap gap-2 w-[600px] max-md:w-[530px] justify-center max-md:items-center max-sm:w-[330px]">
-          <p className="text-4xl font-semibold ">Valorant</p>
+          <p className="text-4xl font-semibold ">{user?.name}</p>
           <p className="text-gray-400 flex flex-wrap max-md:text-center">
             Small Description about the youtuber, this is just a sample text
             their is no meaning of this text so you can ignore it for now and i
@@ -25,11 +85,20 @@ const ChannelPage = () => {
       </p>
       <div className="watchList  h-full w-[100%]">
         <div className="">
-          {dummyData.map((i, k) => (
-            <div key={k}>
-              <WatchListCard />
-            </div>
-          ))}
+          {user?.watchList?.length === 0 ? (
+            <h1 className="text-3xl font-bold flex justify-center mt-4">
+              No Video is added to Watch List.
+            </h1>
+          ) : (
+            user?.watchList?.map((video, k) => (
+              <VideoCard
+                key={k}
+                cardType={"watchList"}
+                video={video}
+                views={video?.stats?.views}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>

@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 const VideoDetailsPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const popupRef = useRef(null);
+  const iconRef = useRef(null);
   const { videoId } = useParams();
   const [videoDetail, setVideoDetail] = useState({});
   const [getRelatedVideo, setGetRelatedVideos] = useState([]);
@@ -27,7 +28,12 @@ const VideoDetailsPage = () => {
   };
 
   const handleClickOutside = (event) => {
-    if (popupRef.current && !popupRef.current.contains(event.target)) {
+    if (
+      popupRef.current &&
+      !popupRef.current.contains(event.target) &&
+      iconRef.current &&
+      !iconRef.current.contains(event.target)
+    ) {
       setIsOpen(false);
     }
   };
@@ -100,7 +106,10 @@ const VideoDetailsPage = () => {
                   {/* <AiOutlineLike className="text-xl text-balck mr-2 " /> */}
                   {`${noOfViews(videoDetail?.stats?.views)} views`}
                 </div>
-                <span className="flex items-center justify-center h-11 w-11 rounded-full bg-black/30 ml-4 relative">
+                <span
+                  className="flex items-center justify-center h-11 w-11 rounded-full bg-black/30 ml-4 relative"
+                  ref={iconRef}
+                >
                   <MdMoreHoriz size={25} onClick={() => setIsOpen(!isOpen)} />
                   {isOpen && (
                     <span

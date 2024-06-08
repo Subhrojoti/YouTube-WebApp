@@ -16,6 +16,9 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import ChannelPage from "./pages/ChannelPage";
 import SignUpPage from "./pages/SignUpPage";
+import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Container = () => {
   return (
@@ -31,20 +34,19 @@ const Container = () => {
 
 const AuthRoute = () => {
   let token = localStorage.getItem("token");
-  // let navigate = useNavigate();
+  let navigate = useNavigate();
+  useEffect(() => {
+    if (!token) navigate("/signUp");
+  }, [token, navigate]);
   if (token) {
     return <Outlet />;
-  } else return <SignUpPage />;
+  }
 };
 function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          {/* <div className="flex flex-col h-full w-[100%] 2xl:w-[1536px] mx-auto">
-            <Navbar />
-            <div className="flex flex-row h-[calc(100%-60px)]">
-              <Sidebar /> */}
           <Routes>
             <Route path="/signUp" element={<SignUpPage />} />
             <Route element={<Container />}>
@@ -55,14 +57,24 @@ function App() {
               />
               <Route path="/video/:videoId" element={<VideoDetailsPage />} />
               <Route path="/auth" element={<AuthRoute />}>
-                <Route path="/watchList" element={<WatchListPage />} />
-                <Route path="/channel" element={<ChannelPage />} />
+                <Route path="/auth/watchList" element={<WatchListPage />} />
+                <Route path="/auth/channel" element={<ChannelPage />} />
               </Route>
             </Route>
           </Routes>
-          {/* </div>
-          </div> */}
         </BrowserRouter>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </PersistGate>
     </Provider>
   );

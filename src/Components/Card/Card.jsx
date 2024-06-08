@@ -5,16 +5,46 @@ import PropTypes from "prop-types";
 import { noOfViews } from "../../utils/helperFunction/noOfViews";
 import { useDispatch, useSelector } from "react-redux";
 import { addWatchList } from "../../Redux/features/userSlice";
+import { useEffect, useState } from "react";
+import { Zoom, toast } from "react-toastify";
+import { UpdateFireStore } from "../../utils/helperFunction/updateFireStore";
 
 const Card = ({ video, time, views }) => {
   const watchList = useSelector((state) => state.user.watchList);
   const isAdded = watchList.some((vid) => vid.videoId === video.videoId);
   const dispatch = useDispatch();
   let view = noOfViews(views);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const token = localStorage.getItem("token");
+  const userState = useSelector((state) => state.user);
+  const [user, setUser] = useState(userState);
+  // console.log(user);
 
-  const handleWatchList = () => {
+  useEffect(() => {
+    setUser(userState);
+  }, [userState, dispatch]);
+
+  const handleWatchList = async () => {
     // add logic that if not logged in redirect to login page
-    if (!isAdded) dispatch(addWatchList(video));
+    if (token) {
+      if (!isAdded) {
+        dispatch(addWatchList(video));
+        toast.success("Added to WatchList", { transition: Zoom });
+        await UpdateFireStore(user);
+      } else {
+        toast.info("Already added", { transition: Zoom });
+      }
+    } else {
+      toast.info("need to login", { transition: Zoom });
+    }
+  };
+
+  const handleMouseEnter = () => {
+    setShowTooltip(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowTooltip(false);
   };
 
   return (
@@ -31,12 +61,23 @@ const Card = ({ video, time, views }) => {
             ? ""
             : moment()?.startOf("day")?.seconds(time)?.format("H:mm:ss")}
         </div>
-        <div className="absolute top-1 right-1 z-10 bg-black w-7 h-7 flex items-center justify-center bg-opacity-60 rounded-full ">
+        <div
+          className="absolute top-1 right-1 z-10 cursor-pointer hover:w-[40px] hover:h-[40px]
+           bg-black w-7 h-7 border border-gray-300 flex items-center justify-center bg-opacity-60 rounded-full "
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           <MdOutlinePlaylistAdd
             color="white"
             size={21}
+            className="hover:w-[80px]"
             onClick={handleWatchList}
           />
+          {showTooltip && (
+            <div className="absolute bottom-[-70px] left-0 max-w-fit transform -translate-x-1/2 mb-2 p-2 bg-gray-800 text-white text-sm rounded shadow-lg z-10">
+              Add to WatchList
+            </div>
+          )}
         </div>
       </div>
       <Link to={`/video/${video?.videoId}`}>

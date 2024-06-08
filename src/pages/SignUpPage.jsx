@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -9,15 +9,18 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { app, db } from "../Firebase/firebase";
-import { collection, addDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { addDetails } from "../Redux/features/userSlice";
+import { Zoom, toast } from "react-toastify";
 
 const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [signUp, setSignUP] = useState("login");
-  const [userDetail, setUserDetail] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const auth = getAuth(app);
 
@@ -36,7 +39,11 @@ const SignUpPage = () => {
           await setDoc(doc(userRef, user.uid), {
             email: email,
             name: name,
+            profilePhoto: "",
+            watchList: [],
           });
+          toast.success("sign up successful now login", { transition: Zoom });
+          setSignUP("login");
         }
       }
       if (signUp === "login") {
@@ -48,8 +55,9 @@ const SignUpPage = () => {
         const user = userCredential.user;
         if (user) {
           fetchUserData();
-          // console.log(user);
+          toast.success("login Successful", { transition: Zoom });
           localStorage.setItem("token", user.accessToken);
+          localStorage.setItem("uid", user.uid);
           navigate("/");
         }
       }
@@ -65,7 +73,9 @@ const SignUpPage = () => {
       const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setUserDetail(docSnap.data());
+        if (docSnap.data()) {
+          dispatch(addDetails(docSnap.data()));
+        }
       }
     });
   };

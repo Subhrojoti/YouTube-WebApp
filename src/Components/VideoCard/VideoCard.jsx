@@ -6,28 +6,56 @@ import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addWatchList, removeWatchList } from "../../Redux/features/userSlice";
 import { published } from "../../utils/helperFunction/published";
+import { Zoom, toast } from "react-toastify";
+import { UpdateFireStore } from "../../utils/helperFunction/updateFireStore";
 
 const VideoCard = ({ cardType, video, views }) => {
   const [isOpen, setIsOpen] = useState(false);
   const popupRef = useRef(null);
+  const iconRef = useRef(null);
+  const userState = useSelector((state) => state.user);
+  const [user, setUser] = useState(userState);
   const watchList = useSelector((state) => state?.user?.watchList);
   const isAdded = watchList.some((vid) => vid?.videoId === video?.videoId);
   const dispatch = useDispatch();
   let view = noOfViews(views);
+  const token = localStorage.getItem("token");
+
+  // console.log(user);
+
+  useEffect(() => {
+    setUser(userState);
+  }, [userState, dispatch]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  const handleWatchList = () => {
-    // add logic that if not logged in redirect to login page
+  const handleWatchList = async () => {
     if (cardType === "watchList") {
       dispatch(removeWatchList(video));
-    } else if (!isAdded) dispatch(addWatchList(video));
+      toast.success("Removed from watchList", { transition: Zoom });
+      await UpdateFireStore(user);
+    } else if (token) {
+      if (!isAdded) {
+        dispatch(addWatchList(video));
+        toast.success("Added to watchList", { transition: Zoom });
+        await UpdateFireStore(user);
+      } else {
+        toast.info("Already added", { transition: Zoom });
+      }
+    } else {
+      toast.info("Need to Login", { transition: Zoom });
+    }
     setIsOpen(!isOpen);
   };
 
   const handleClickOutside = (event) => {
-    if (popupRef.current && !popupRef.current.contains(event.target)) {
+    if (
+      popupRef.current &&
+      !popupRef.current.contains(event.target) &&
+      iconRef.current &&
+      !iconRef.current.contains(event.target)
+    ) {
       setIsOpen(false);
     }
   };
@@ -90,7 +118,7 @@ const VideoCard = ({ cardType, video, views }) => {
           </div>
         </div>
       </Link>
-      <span className="mt-4 relative ">
+      <span className="mt-4 relative " ref={iconRef}>
         <IoMdMore size={25} onClick={toggleMenu} className="" />
         {isOpen && (
           <span
