@@ -21,13 +21,17 @@ const VideoCard = ({ cardType, video, views }) => {
   let view = noOfViews(views);
   const token = localStorage.getItem("token");
 
+  // useEffect updated the user information after every change
   useEffect(() => {
     setUser(userState);
   }, [userState, dispatch]);
 
+  // handles the toggle of option to add to watch list
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  // handles the logic to add and remove watch list according
   const handleWatchList = async () => {
     if (cardType === "watchList") {
       dispatch(removeWatchList(video));
@@ -50,6 +54,7 @@ const VideoCard = ({ cardType, video, views }) => {
     setIsOpen(!isOpen);
   };
 
+  // handles the functionality to close the pop up on click event outside the icon
   const handleClickOutside = (event) => {
     if (
       popupRef.current &&
@@ -60,7 +65,6 @@ const VideoCard = ({ cardType, video, views }) => {
       setIsOpen(false);
     }
   };
-
   useEffect(() => {
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);

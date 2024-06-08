@@ -18,14 +18,13 @@ const Card = ({ video, time, views }) => {
   const token = localStorage.getItem("token");
   const userState = useSelector((state) => state.user);
   const [user, setUser] = useState(userState);
-  // console.log(user);
 
   useEffect(() => {
     setUser(userState);
   }, [userState, dispatch]);
 
   const handleWatchList = async () => {
-    // add logic that if not logged in redirect to login page
+    // logic that if not logged in then show appropriate messages
     if (token) {
       if (!isAdded) {
         dispatch(addWatchList(video));
@@ -39,10 +38,10 @@ const Card = ({ video, time, views }) => {
     }
   };
 
+  // handles tooltip show and hide on hover over the watch list icon on video card
   const handleMouseEnter = () => {
     setShowTooltip(true);
   };
-
   const handleMouseLeave = () => {
     setShowTooltip(false);
   };

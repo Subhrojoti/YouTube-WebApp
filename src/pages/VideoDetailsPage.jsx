@@ -27,7 +27,7 @@ const VideoDetailsPage = () => {
   const [user, setUser] = useState(userState);
 
   const handleWatchList = async () => {
-    // add logic that if not logged in redirect to login page
+    // logic that if not logged show appropriate message
     if (token) {
       if (!isAdded) {
         dispatch(addWatchList(videoDetail));
@@ -44,10 +44,12 @@ const VideoDetailsPage = () => {
     }
   };
 
+  // update the local user on change in redux state
   useEffect(() => {
     setUser(userState);
   }, [userState, dispatch]);
 
+  // handles the show and hide functionality of add to watch list
   const handleClickOutside = (event) => {
     if (
       popupRef.current &&
@@ -70,6 +72,7 @@ const VideoDetailsPage = () => {
     };
   }, [isOpen]);
 
+  // this useEffect handles the related video section
   useEffect(() => {
     const handleRelatedVideo = async () => {
       try {

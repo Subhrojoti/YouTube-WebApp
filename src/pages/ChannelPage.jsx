@@ -13,6 +13,7 @@ const ChannelPage = () => {
   const profileImageRef = useRef(null);
   const dispatch = useDispatch();
 
+  // useEffect updated the user information after every change
   useEffect(() => {
     setUser(userState);
   }, [userState, dispatch]);
@@ -26,7 +27,7 @@ const ChannelPage = () => {
   const handleChangeUserImage = (event) => {
     const inputImage = event.target.files[0];
     setProfileImage(URL.createObjectURL(inputImage));
-
+    // function to upload image to clodinary and then save the url to firestore
     const saveImage = async () => {
       const data = new FormData();
       data.append("file", inputImage);
@@ -41,11 +42,9 @@ const ChannelPage = () => {
           }
         );
         const cloudData = await res.json();
-        console.log(cloudData.url);
         if (cloudData) toast.success("done");
-        dispatch(addProfilePhoto(cloudData.url));
-        await UpdateFireStore(user);
-        console.log("after updateFirestore");
+        dispatch(addProfilePhoto(cloudData.url)); // update the redux state
+        await UpdateFireStore(user); // update the firestore
       } catch (error) {
         toast.error(error.message, { transition: Zoom });
       }

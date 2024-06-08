@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import VideoCard from "../Components/VideoCard/VideoCard";
 
 const WatchListPage = () => {
+  // list of all the watch list videos from the redux state
   const watchList = useSelector((state) => state.user.watchList);
 
   return (

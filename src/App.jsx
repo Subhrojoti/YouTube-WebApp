@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+// container component to wrap around the main div
 const Container = () => {
   return (
     <div className="flex flex-col h-full w-[100%] mx-auto">
@@ -32,6 +33,7 @@ const Container = () => {
   );
 };
 
+//  auth component to restrict the path for logged in user
 const AuthRoute = () => {
   let token = localStorage.getItem("token");
   let navigate = useNavigate();
@@ -42,6 +44,7 @@ const AuthRoute = () => {
     return <Outlet />;
   }
 };
+
 function App() {
   return (
     <Provider store={store}>

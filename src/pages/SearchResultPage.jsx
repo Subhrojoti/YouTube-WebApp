@@ -7,6 +7,7 @@ const SearchResultPage = () => {
   const [searchResult, setSearchResult] = useState([]);
   const { searchTerm } = useParams();
 
+  // runs every time the search term changes to fetch the searched team related videos
   useEffect(() => {
     const search = async () => {
       try {
@@ -18,6 +19,7 @@ const SearchResultPage = () => {
     };
     search();
   }, [searchTerm]);
+
   return (
     <div className="grow h-full w-[calc(100%-240px)] overflow-y-auto bg-white">
       <div className="grid grid-cols-1 gap-2 p-5">
