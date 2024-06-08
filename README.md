@@ -22,7 +22,7 @@ This project is a basic video-sharing application inspired by YouTube. It includ
 - Firebase project set up for authentication
 
 ### Steps
-1. Clone the repository:
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/your-username/your-repo.git
    cd your-repo
