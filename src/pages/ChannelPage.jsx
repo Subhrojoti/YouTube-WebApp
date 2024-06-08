@@ -80,7 +80,7 @@ const ChannelPage = () => {
           <p>223k subscribers</p>
         </div>
       </div>
-      <p className="text-5xl mt-4 font-bold max-md:text-4xl max-md:my-4 max-sm:text-2xl">
+      <p className="text-5xl font-bold mt-6 md:text-4xl md:mt-5 sm:text-2xl sm:mt-3 sm:mb-3 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 animate-gradient-x drop-shadow-lg uppercase text-center">
         All Watchlist
       </p>
       <div className="watchList  h-full w-[100%]">
