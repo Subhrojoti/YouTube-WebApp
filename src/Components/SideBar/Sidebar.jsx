@@ -1,15 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import { LeftNavCategories } from "../../utils/Constants/LeftNavCategories";
 import React from "react";
+import { Zoom, toast } from "react-toastify";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const handleSideNav = (e) => {
     if (e.target.innerText === "Home") navigate("/");
-    if (e.target.innerText === "Watch List") navigate("/watchList");
+    if (e.target.innerText === "Watch List") navigate("/auth/watchList");
+    if (e.target.innerText === "You") navigate("/auth/channel");
     if (e.target.innerText === "Trending") navigate(`/searchResult/trending`);
     if (e.target.innerText === "Musics") navigate(`/searchResult/songs`);
     if (e.target.innerText === "Movies") navigate(`/searchResult/movies`);
+    if (
+      e.target.innerText === "Shorts" ||
+      e.target.innerText === "Subscripitions"
+    ) {
+      toast.info("Upcoming feature", { transition: Zoom });
+    }
   };
   return (
     <div className="md:block xl:w-[240px] md:w-[100px] overflow-y-auto h-full py-4 bg-white absolute md:relative z-10 translate-x-[-240px] md:translate-x-0 transition-all">
