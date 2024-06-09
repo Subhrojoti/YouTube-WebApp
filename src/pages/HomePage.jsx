@@ -22,7 +22,7 @@ const HomePage = () => {
   }, [dispatch]);
 
   return (
-    <div className="grow w-[calc(100%-240px)] h-full overflow-y-auto bg-white">
+    <div className="grow w-[calc(100%-240px)] h-full mb-[100px] overflow-y-auto bg-white">
       <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))] py-4 pr-4 max-sm:pl-4 max-md:pl-4">
         {videos &&
           videos.map((video, i) => {

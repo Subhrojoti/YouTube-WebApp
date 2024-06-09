@@ -8,7 +8,6 @@ const BottomNav = () => {
 
   // handles the navigation of the bottom nav
   const handleSideNav = (name) => {
-    // console.log(e);
     if (name === "Home") navigate("/");
     if (name === "You") navigate("/auth/channel");
     if (name === "Trending") navigate(`/searchResult/trending`);
@@ -28,14 +27,10 @@ const BottomNav = () => {
             <span className="text-xl mr-5">{item.icon} </span>
             <span className="hidden"> {item.name}</span>
           </div>
-          {/* {item.divider && <hr className="my-5 border-gray/[0.5]" />} */}
         </React.Fragment>
       ))}
     </div>
-    //   </div>
   );
 };
 
 export default BottomNav;
-
-bottomNavList;

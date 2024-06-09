@@ -27,7 +27,7 @@ const Container = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Adjust breakpoint as needed
+      setIsMobile(window.innerWidth < 768); // Adjust breakpoint as needed
     };
 
     window.addEventListener("resize", handleResize);
