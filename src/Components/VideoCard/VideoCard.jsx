@@ -80,61 +80,70 @@ const VideoCard = ({ cardType, video, views }) => {
   return (
     <div className="flex flex-col md:flex-row mb-8 md:mb-3 lg:hover:bg-gray-200 rounded-xl md:p-4">
       <Link to={`/video/${video?.videoId}`}>
-        <div className="flex flex-col md:flex-row mb-8 md:mb-3 lg:hover:bg-gray-200 rounded-xl md:p-4 ">
-          <div className="relative flex shrink-0 h-48 md:h-28 lg:h-40 xl:h-48 w-full md:w-48 lg:w-64 xl:w-80 rounded-xl bg-slate-800 overflow-hidden">
-            <img
-              className="h-full w-full object-cover"
-              src={video?.thumbnails[0]?.url}
-            />
-          </div>
-          <div className="flex flex-col ml-4 md:ml-6 mt-4 md:mt-0 overflow-hidden">
-            <span className="text-lg md:text-2xl font-semibold line-clamp-2 text-black">
+        <div className="relative flex shrink-0 h-48 md:h-28 lg:h-40 xl:h-48 w-full md:w-48 lg:w-64 xl:w-80 rounded-xl bg-slate-800 overflow-hidden">
+          <img
+            className="h-full w-full object-cover"
+            src={video?.thumbnails[0]?.url}
+          />
+        </div>
+      </Link>
+
+      <div className="flex flex-col ml-4 md:ml-6 mt-4 md:mt-0 overflow-hidden grow">
+        <div className="flex">
+          <Link to={`/video/${video?.videoId}`} className="grow">
+            <span className="text-lg md:text-2xl font-semibold line-clamp-2 text-black grow">
               {video?.title}
             </span>
-            <span className="empty:hidden text-sm line-clamp-1 md:line-clamp-2 text-gray-500 md:pr-24 md:my-4">
-              {video?.descriptionSnippet || video?.description}
+          </Link>
+          <span className="mt-4 relative justify-end" ref={iconRef}>
+            <IoMdMore
+              size={25}
+              onClick={toggleMenu}
+              className="cursor-pointer"
+            />
+            {isOpen && (
+              <span
+                className="absolute right-0 bg-gray-100 rounded-md min-w-max p-2 cursor-pointer"
+                onClick={handleWatchList}
+                ref={popupRef}
+              >
+                {cardType === "watchList"
+                  ? "Remove WatchList"
+                  : "Add To WatchList"}
+              </span>
+            )}
+          </span>
+        </div>
+        <span className="empty:hidden text-sm line-clamp-1 md:line-clamp-2 text-gray-500 md:pr-24 md:my-4">
+          {video?.descriptionSnippet || video?.description}
+        </span>
+        <div className="hidden md:flex items-center">
+          <div className="flex items-start mr-3">
+            <div className="flex h-9 w-9 rounded-full overflow-hidden">
+              <img
+                className="h-full w-full object-cover"
+                src={video?.author?.avatar[0]?.url}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-semibold mt-2 text-gray-500 flex items-center">
+              {video?.author?.title}
             </span>
-            <div className="hidden md:flex items-center">
-              <div className="flex items-start mr-3">
-                <div className="flex h-9 w-9 rounded-full overflow-hidden">
-                  <img
-                    className="h-full w-full object-cover"
-                    src={video?.author?.avatar[0]?.url}
-                  />
-                </div>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-semibold mt-2 text-gray-500 flex items-center">
-                  {video?.author?.title}
-                </span>
-                <div className="flex text-sm font-semibold text-gray-500 truncate overflow-hidden">
-                  <span>{view}</span>
-                  <span className="flex text-[24px] leading-none font-bold text-gray-400 relative top-[-10px] mx-1">
-                    .
-                  </span>
-                  <span className="truncate">
-                    {video?.publishedTimeText === undefined
-                      ? published(video?.publishedDate?.slice(0, 10))
-                      : video?.publishedTimeText}
-                  </span>
-                </div>
-              </div>
+            <div className="flex text-sm font-semibold text-gray-500 truncate overflow-hidden">
+              <span>{view}</span>
+              <span className="flex text-[24px] leading-none font-bold text-gray-400 relative top-[-10px] mx-1">
+                .
+              </span>
+              <span className="truncate">
+                {video?.publishedTimeText === undefined
+                  ? published(video?.publishedDate?.slice(0, 10))
+                  : video?.publishedTimeText}
+              </span>
             </div>
           </div>
         </div>
-      </Link>
-      <span className="mt-4 relative " ref={iconRef}>
-        <IoMdMore size={25} onClick={toggleMenu} className="cursor-pointer" />
-        {isOpen && (
-          <span
-            className="absolute right-0 bg-gray-100 rounded-md min-w-max p-2 cursor-pointer"
-            onClick={handleWatchList}
-            ref={popupRef}
-          >
-            {cardType === "watchList" ? "Remove WatchList" : "Add To WatchList"}
-          </span>
-        )}
-      </span>
+      </div>
     </div>
   );
 };

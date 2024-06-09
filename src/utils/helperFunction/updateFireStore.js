@@ -12,6 +12,5 @@ export const UpdateFireStore = async (user) => {
     profilePhoto: user?.profilePhoto,
     watchList: user?.watchList,
   });
-  console.log(user);
   return;
 };

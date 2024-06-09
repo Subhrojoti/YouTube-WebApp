@@ -54,7 +54,7 @@ const ChannelPage = () => {
 
   useEffect(() => {});
   return (
-    <div className="flex flex-col w-full  px-10 items-center pt-7 max-md:p-1 overflow-y-auto">
+    <div className="flex flex-col w-full mb-16 px-10 items-center pt-7 max-md:p-1 overflow-y-auto">
       <div className=" flex gap-2 max-md:flex-col max-md:items-center ">
         <div className="channel-logo w-44 h-44 bg-white rounded-full overflow-hidden max-md:w-20 max-md:h-20">
           <img
