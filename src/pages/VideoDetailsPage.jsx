@@ -21,7 +21,7 @@ const VideoDetailsPage = () => {
   const [getRelatedVideo, setGetRelatedVideos] = useState([]);
   const dispatch = useDispatch();
   const watchList = useSelector((state) => state.user.watchList);
-  const isAdded = watchList.some((vid) => vid.videoId === videoId);
+  const isAdded = watchList?.some((vid) => vid.videoId === videoId);
   const token = localStorage.getItem("token");
   const userState = useSelector((state) => state.user);
   const [user, setUser] = useState(userState);
