@@ -11,7 +11,7 @@ import { UpdateFireStore } from "../../utils/helperFunction/updateFireStore";
 
 const Card = ({ video, time, views }) => {
   const watchList = useSelector((state) => state.user.watchList);
-  const isAdded = watchList.some((vid) => vid.videoId === video.videoId);
+  const isAdded = watchList?.some((vid) => vid.videoId === video.videoId);
   const dispatch = useDispatch();
   let view = noOfViews(views);
   const [showTooltip, setShowTooltip] = useState(false);

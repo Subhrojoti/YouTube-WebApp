@@ -16,7 +16,7 @@ const VideoCard = ({ cardType, video, views }) => {
   const userState = useSelector((state) => state.user);
   const [user, setUser] = useState(userState);
   const watchList = useSelector((state) => state?.user?.watchList);
-  const isAdded = watchList.some((vid) => vid?.videoId === video?.videoId);
+  const isAdded = watchList?.some((vid) => vid?.videoId === video?.videoId);
   const dispatch = useDispatch();
   let view = noOfViews(views);
   const token = localStorage.getItem("token");

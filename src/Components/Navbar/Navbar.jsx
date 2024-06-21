@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import defaultUser from "../../assets/defaultUser.svg";
 import { removeDetails } from "../../Redux/features/userSlice";
+import { IoCloseCircle } from "react-icons/io5";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +17,16 @@ const Navbar = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [submit, setSubmit] = useState(false);
+
+  const handleOpenSearchOnSmallDevices = () => {
+    // add logic to search on small devices
+    setSubmit(true);
+  };
+
+  const handleCloseSubmit = () => {
+    setSubmit(false);
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -49,6 +60,7 @@ const Navbar = () => {
   const handleSearch = () => {
     if (searchTerm?.length > 0) {
       navigate(`/searchResult/${searchTerm}`);
+      setSubmit(false);
     }
   };
 
@@ -67,6 +79,7 @@ const Navbar = () => {
           <img src={logo} alt="logo" className="h-[100%]" />
         </Link>
       </div>
+
       <div className="hidden mx-2 md:flex items-center w-[50%] rounded-full border bg-gray-100 h-10 my-2 ">
         <input
           type="text"
@@ -83,6 +96,32 @@ const Navbar = () => {
           onClick={handleSearch}
         />
       </div>
+      <span className="grow md:hidden"></span>
+      <FiSearch
+        className="w-[50px] md:hidden text-lg cursor-pointer"
+        onClick={handleOpenSearchOnSmallDevices}
+      />
+      {submit && (
+        <div className="fixed top-0 left-0 w-[100%] h-[100vh] overflow-auto bg-gray-500 bg-opacity-50 z-50">
+          <div className=" w-[80%] relative mx-auto mt-2 flex items-center gap-2 bg-white border border-gray-300 shadow-md px-2  h-[50px]">
+            <input
+              type="text"
+              placeholder="Search"
+              name="searchBox"
+              id="searchBox"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyUp={(e) => (e.key === "Enter" ? handleSearch() : "")}
+              className="flex-grow h-full rounded-l-full p-4 focus:outline-none"
+            />
+            <IoCloseCircle
+              size={25}
+              className=" text-gray-500 cursor-pointer"
+              onClick={handleCloseSubmit}
+            />
+          </div>
+        </div>
+      )}
       <div className="pr-3">
         {token === null ? (
           <button
